@@ -28,6 +28,26 @@
     --shadow:0 8px 30px rgba(0,0,0,.5);
   }
 }
+/* 表の寸法。狭い画面では下のメディアクエリでまとめて縮める */
+:root{
+  --w-team:130px; --w-pos:86px; --w-tally:66px; --w-daihyo:86px;
+  --h-head:38px; --h-name:34px; --h-score:74px;
+  --f-head:14px; --f-tname:15px; --f-name:13px;
+  --f-mk:26px; --f-mk2:22px; --sz-circ:38px; --f-circ:24px; --mk-off:8px;
+  --f-tally:17px; --f-wo:15px; --f-fl:13px;
+}
+@media (max-width:760px){
+  :root{
+    --w-team:54px; --w-pos:44px; --w-tally:40px; --w-daihyo:46px;
+    --h-head:30px; --h-name:26px; --h-score:58px;
+    --f-head:11px; --f-tname:12px; --f-name:11px;
+    --f-mk:18px; --f-mk2:15px; --sz-circ:26px; --f-circ:16px; --mk-off:3px;
+    --f-tally:13px; --f-wo:10px; --f-fl:10px;
+  }
+  main{padding:8px}
+  #meta label{flex:1 1 100%}
+  #meta input, #meta label.wide input{width:100%; flex:1}
+}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
@@ -61,39 +81,40 @@ button{font-family:inherit; font-size:14px; cursor:pointer}
 
 /* ---- table ---- */
 #tableWrap{overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:4px}
-table.score{border-collapse:collapse; margin:0 auto; background:var(--panel); table-layout:fixed}
+/* width:max-content で、狭い画面でも列が潰れない（入りきらなければ横スクロール） */
+table.score{border-collapse:collapse; margin:0 auto; background:var(--panel); table-layout:fixed; width:max-content}
 table.score th, table.score td{
   border:1px solid var(--line-strong); text-align:center; vertical-align:middle; padding:0;
 }
-table.score th{font-size:14px; font-weight:700; height:38px; padding:0 6px}
-th.c-team{width:130px}
-th.c-pos{width:86px}
-th.c-tally{width:66px}
-th.c-daihyo{width:86px}
-td.nm{height:34px; font-size:13px; color:var(--fg); padding:0 3px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
-td.tname{font-size:15px; font-weight:700; width:130px}
+table.score th{font-size:var(--f-head); font-weight:700; height:var(--h-head); padding:0 3px; line-height:1.15}
+col.w-team{width:var(--w-team)}
+col.w-pos{width:var(--w-pos)}
+col.w-tally{width:var(--w-tally)}
+col.w-daihyo{width:var(--w-daihyo)}
+td.nm{height:var(--h-name); font-size:var(--f-name); color:var(--fg); padding:0 2px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
+td.tname{font-size:var(--f-tname); font-weight:700; padding:0 2px; overflow:hidden}
 tr.red td.tname{color:var(--red); background:var(--red-soft)}
 tr.wht td.tname{background:var(--white-soft)}
-td.sc{height:74px; position:relative; cursor:pointer}
+td.sc{height:var(--h-score); position:relative; cursor:pointer; overflow:hidden}
 td.sc.focus{box-shadow:inset 0 0 0 3px var(--focus)}
-td.tl{position:relative; height:74px}
-.mk{position:absolute; font-size:26px; line-height:1; font-weight:600}
-.mk.s1{left:8px; top:8px}
-.mk.s2{right:8px; bottom:8px; font-size:22px}
+td.tl{position:relative; height:var(--h-score); overflow:hidden}
+.mk{position:absolute; font-size:var(--f-mk); line-height:1; font-weight:600}
+.mk.s1{left:var(--mk-off); top:var(--mk-off)}
+.mk.s2{right:var(--mk-off); bottom:var(--mk-off); font-size:var(--f-mk2)}
 .mk .circ{
   display:inline-flex; align-items:center; justify-content:center;
-  width:38px; height:38px; border:2px solid currentColor; border-radius:50%;
-  font-size:24px;
+  width:var(--sz-circ); height:var(--sz-circ); border:2px solid currentColor; border-radius:50%;
+  font-size:var(--f-circ);
 }
 tr.red .mk{color:var(--red)}
 tr.wht .mk{color:var(--fg)}
-.fl{position:absolute; left:4px; bottom:2px; font-size:13px; letter-spacing:1px; color:var(--fg-dim)}
-.wo{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700}
+.fl{position:absolute; left:3px; bottom:1px; font-size:var(--f-fl); letter-spacing:1px; color:var(--fg-dim)}
+.wo{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:var(--f-wo); font-weight:700}
 tr.red .wo{color:var(--red)}
 svg.xd{position:absolute; inset:0; width:100%; height:100%; pointer-events:none}
 svg.xd line{stroke:var(--fg); stroke-width:2.5; vector-effect:non-scaling-stroke}
-.tallybox{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:17px; font-weight:700; line-height:1.15}
-.tallybox .mark{position:absolute; inset:6px; pointer-events:none}
+.tallybox{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:var(--f-tally); font-weight:700; line-height:1.15}
+.tallybox .mark{position:absolute; inset:4px; pointer-events:none}
 .tallybox .mark circle, .tallybox .mark polygon{fill:none; stroke:var(--fg); stroke-width:2; vector-effect:non-scaling-stroke}
 tr.red .tallybox .mark circle, tr.red .tallybox .mark polygon{stroke:var(--red)}
 .ovr{position:absolute; right:2px; top:1px; font-size:10px; color:var(--fg-dim)}
@@ -556,10 +577,10 @@ function tallyCellHtml(m,t,kind){
 function renderTable(){
   const s=M.settings, n=s.count;
   const tallyCols = s.tally==="single" ? 1 : 2;
-  let h = `<table class="score"><colgroup><col style="width:130px">`;
-  h += `<col style="width:86px">`.repeat(n);
-  h += `<col style="width:66px">`.repeat(tallyCols);
-  if (s.daihyo) h += `<col style="width:86px">`;
+  let h = `<table class="score"><colgroup><col class="w-team">`;
+  h += `<col class="w-pos">`.repeat(n);
+  h += `<col class="w-tally">`.repeat(tallyCols);
+  if (s.daihyo) h += `<col class="w-daihyo">`;
   h += `</colgroup>`;
 
   /* row A: ヘッダ */

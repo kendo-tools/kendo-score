@@ -69,6 +69,7 @@ button{font-family:inherit; font-size:14px; cursor:pointer}
 .btn.primary{background:var(--red); border-color:var(--red); color:#fff}
 .btn.small{padding:6px 9px; font-size:13px}
 .row{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:12px 0}
+.row.tools{margin-top:22px; padding-top:16px; border-top:1px solid var(--line)}
 
 /* ---- meta ---- */
 #meta{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px}
@@ -114,7 +115,12 @@ tr.red .wo{color:var(--red)}
 svg.xd{position:absolute; inset:0; width:100%; height:100%; pointer-events:none}
 svg.xd line{stroke:var(--fg); stroke-width:2.5; vector-effect:non-scaling-stroke}
 .tallybox{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:var(--f-tally); font-weight:700; line-height:1.15}
-.tallybox .mark{position:absolute; inset:4px; pointer-events:none}
+/* SVGは置換要素なので inset だけでは伸びず 1:1 のまま上寄せになる。幅と高さを明示して数字と同心にする */
+.tallybox .mark{
+  position:absolute; left:4px; top:4px;
+  width:calc(100% - 8px); height:calc(100% - 8px);
+  pointer-events:none;
+}
 .tallybox .mark circle, .tallybox .mark polygon{fill:none; stroke:var(--fg); stroke-width:2; vector-effect:non-scaling-stroke}
 tr.red .tallybox .mark circle, tr.red .tallybox .mark polygon{stroke:var(--red)}
 .ovr{position:absolute; right:2px; top:1px; font-size:10px; color:var(--fg-dim)}
@@ -214,14 +220,6 @@ select, .fld input[type=number], .fld input[type=text]{
 
   <div id="tableWrap"></div>
 
-  <div class="row">
-    <button class="btn" id="btnNames">選手名入力</button>
-    <button class="btn" id="btnSettings">表設定変更</button>
-    <button class="btn" id="btnSwap">紅白入替</button>
-    <button class="btn" id="btnReset">リセット</button>
-    <button class="btn" id="btnOut">出力</button>
-  </div>
-
   <div id="pad">
     <div id="focusLabel"></div>
     <div class="padgrid">
@@ -233,6 +231,14 @@ select, .fld input[type=number], .fld input[type=text]{
       <button class="btn" id="btnPrev">← 前選手へ</button>
       <button class="btn" id="btnNext">次選手へ →</button>
     </div>
+  </div>
+
+  <div class="row tools">
+    <button class="btn" id="btnNames">選手名入力</button>
+    <button class="btn" id="btnSettings">表設定変更</button>
+    <button class="btn" id="btnSwap">紅白入替</button>
+    <button class="btn" id="btnReset">リセット</button>
+    <button class="btn" id="btnOut">出力</button>
   </div>
 </main>
 
